@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sesión B1 · Taller IA · Elite Expert Academy</title>
+<style>
+  :root{
+    --navy-dark:#121B3A;
+    --navy:#1E2D6B;
+    --gold:#F5C842;
+    --grey-bg:#F7F7F9;
+    --text:#1A1A1A;
+    --muted:#5A5F73;
+    --green:#166534;
+    --green-soft:#DCFCE7;
+    --red:#B91C1C;
+    --red-soft:#FEE2E2;
+    --teal:#0F766E;
+    --teal-soft:#CCFBF1;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:Arial, Helvetica, sans-serif;
+    color:var(--text);
+    background:var(--grey-bg);
+    line-height:1.6;
+  }
+
+  /* HEADER */
+  header.site{
+    background:linear-gradient(135deg, var(--navy-dark) 60%, var(--navy));
+    color:#fff;
+    padding:40px 24px;
+  }
+  .container{ max-width:880px; margin:0 auto; padding:0 24px; }
+  .brand{
+    font-size:12px; letter-spacing:2px; text-transform:uppercase;
+    color:var(--gold); font-weight:bold; margin-bottom:8px;
+  }
+  h1.title{ font-size:30px; margin:0 0 6px 0; color:#fff; }
+  .subtitle{ color:#C9CEE8; font-size:15px; margin:0 0 16px 0; }
+  .tags{
+    display:flex; flex-wrap:wrap; gap:8px; margin-top:14px;
+  }
+  .tags span{
+    background:rgba(255,255,255,0.12);
+    border:1px solid rgba(255,255,255,0.2);
+    border-radius:20px;
+    padding:5px 14px;
+    font-size:12px; color:#fff; font-weight:bold;
+  }
+  .tags span.gold-tag{
+    background:var(--gold); color:var(--navy-dark); border-color:var(--gold);
+  }
+
+  /* AGENDA BAR */
+  .agenda-bar{
+    background:var(--navy);
+    padding:14px 0;
+  }
+  .agenda-bar .container{
+    display:flex; flex-wrap:wrap; gap:0; overflow:hidden; border-radius:6px;
+  }
+  .ag-item{
+    flex:1; min-width:90px;
+    padding:10px 12px;
+    background:rgba(255,255,255,0.06);
+    border-right:1px solid rgba(255,255,255,0.1);
+    text-align:center;
+  }
+  .ag-item:last-child{ border-right:none; }
+  .ag-time{ font-size:11px; color:var(--gold); font-weight:bold; display:block; margin-bottom:2px; }
+  .ag-label{ font-size:12px; color:#fff; }
+
+  /* MAIN */
+  main{ padding:40px 0 80px; }
+
+  /* BLOCKS */
+  section.block{
+    background:#fff;
+    border:1px solid #E5E5EA;
+    border-radius:8px;
+    padding:32px;
+    margin-bottom:24px;
+  }
+  .block-number{
+    font-size:12px; letter-spacing:2px; color:var(--navy);
+    font-weight:bold; margin-bottom:6px; text-transform:uppercase;
+  }
+  .block h2{ font-size:22px; margin:0 0 4px 0; color:var(--navy-dark); }
+  .block h3{ font-size:16px; margin:18px 0 6px 0; color:var(--navy); }
+  .block p{ color:var(--muted); margin:6px 0 14px 0; font-size:14px; }
+
+  /* BUTTONS */
+  .btn{
+    display:inline-block; background:var(--navy); color:#fff;
+    text-decoration:none; padding:10px 20px; border-radius:6px;
+    font-weight:bold; font-size:14px; margin-right:8px; margin-top:4px;
+  }
+  .btn:hover{ background:var(--navy-dark); }
+  .btn.gold{ background:var(--gold); color:var(--navy-dark); }
+  .btn.gold:hover{ background:#e0b438; }
+  .btn.outline{
+    background:transparent; border:2px solid var(--navy); color:var(--navy);
+  }
+  .btn.outline:hover{ background:var(--navy); color:#fff; }
+
+  /* PROMPT BOX */
+  .prompt-box{
+    background:var(--grey-bg);
+    border-left:4px solid var(--gold);
+    border-radius:0 6px 6px 0;
+    padding:14px 18px;
+    font-size:13.5px;
+    color:var(--text);
+    margin:10px 0;
+    font-style:italic;
+    line-height:1.7;
+  }
+  .prompt-box.green{ border-left-color:var(--green); }
+  .prompt-box.teal{ border-left-color:var(--teal); }
+
+  /* TAGS */
+  .tag{
+    display:inline-block; font-size:11px; font-weight:bold;
+    letter-spacing:1px; text-transform:uppercase;
+    padding:3px 10px; border-radius:4px; margin-bottom:8px;
+  }
+  .tag.academic{ background:#EDE9FE; color:#5B21B6; }
+  .tag.admin{ background:var(--teal-soft); color:var(--teal); }
+  .tag.shared{ background:#FEF3C7; color:#92400E; }
+  .tag.tool{ background:#F0FDF4; color:var(--green); }
+
+  /* ROLE SPLIT */
+  .role-split{
+    display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:16px;
+  }
+  @media(max-width:600px){ .role-split{ grid-template-columns:1fr; } }
+  .role-card{
+    border:1px solid #E5E5EA; border-radius:8px; padding:20px;
+  }
+  .role-card.academic{ border-top:3px solid #7C3AED; }
+  .role-card.admin{ border-top:3px solid var(--teal); }
+  .role-card h4{ margin:0 0 8px 0; font-size:15px; }
+  .role-card ul{ margin:8px 0 0 0; padding-left:18px; color:var(--muted); font-size:13.5px; }
+  .role-card ul li{ margin-bottom:5px; }
+  .role-card .who{
+    font-size:12px; text-transform:uppercase; letter-spacing:1px;
+    color:var(--muted); margin-bottom:10px;
+  }
+
+  /* CARDS */
+  .cards{
+    display:grid; grid-template-columns:repeat(auto-fit, minmax(180px,1fr));
+    gap:16px; margin-top:16px;
+  }
+  .card{
+    border:1px solid #E5E5EA; border-radius:8px; padding:18px; text-align:center;
+  }
+  .card .icon{
+    width:44px; height:44px; border-radius:50%; background:var(--navy); color:#fff;
+    display:flex; align-items:center; justify-content:center;
+    font-weight:bold; font-size:18px; margin:0 auto 10px auto;
+  }
+  .card h4{ margin:0 0 4px 0; font-size:15px; color:var(--navy-dark); }
+  .card .org{ font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:1px; margin-bottom:8px; }
+  .card p{ font-size:13px; margin:0 0 12px 0; color:var(--muted); }
+
+  /* CSV TABLE */
+  .csv-table{
+    width:100%; border-collapse:collapse; font-size:13px; margin-top:12px;
+  }
+  .csv-table th{
+    background:var(--navy); color:#fff; padding:8px 12px; text-align:left; font-size:12px;
+  }
+  .csv-table td{ padding:8px 12px; border-bottom:1px solid #E5E5EA; color:var(--text); }
+  .csv-table tr:last-child td{ border-bottom:none; }
+  .csv-table tr:nth-child(even) td{ background:#F7F7F9; }
+  .badge{
+    display:inline-block; padding:2px 8px; border-radius:10px; font-size:11px; font-weight:bold;
+  }
+  .badge.mora{ background:#FEE2E2; color:#B91C1C; }
+  .badge.ok{ background:#DCFCE7; color:#166534; }
+  .badge.pendiente{ background:#FEF3C7; color:#92400E; }
+
+  /* STEPS */
+  .steps{ margin:16px 0 0 0; padding:0; list-style:none; }
+  .steps li{
+    display:flex; gap:14px; align-items:flex-start;
+    padding:10px 0; border-bottom:1px solid #F0F0F0;
+  }
+  .steps li:last-child{ border-bottom:none; }
+  .step-num{
+    min-width:28px; height:28px; border-radius:50%;
+    background:var(--navy); color:#fff;
+    display:flex; align-items:center; justify-content:center;
+    font-weight:bold; font-size:13px; margin-top:2px;
+  }
+  .step-body{ font-size:14px; color:var(--text); }
+  .step-body strong{ display:block; margin-bottom:2px; color:var(--navy-dark); }
+
+  /* CHECKLIST */
+  ul.checklist{ padding-left:20px; color:var(--muted); font-size:14px; }
+  ul.checklist li{ margin-bottom:6px; }
+
+  /* CIERRE TABLE */
+  .cierre-table{
+    width:100%; border-collapse:collapse; margin-top:14px; font-size:13.5px;
+  }
+  .cierre-table th{
+    background:var(--navy-dark); color:#fff; padding:10px 14px; text-align:left;
+  }
+  .cierre-table td{
+    padding:10px 14px; border-bottom:1px solid #E5E5EA;
+  }
+  .cierre-table tr:nth-child(even) td{ background:#F7F7F9; }
+
+  /* HIGHLIGHT BOX */
+  .highlight{
+    background:#FFF8E1; border-left:4px solid var(--gold);
+    border-radius:0 6px 6px 0; padding:14px 18px; margin:16px 0;
+    font-size:13.5px; color:var(--text);
+  }
+  .highlight strong{ color:var(--navy-dark); }
+
+  /* FOOTER */
+  footer.site{
+    background:var(--navy-dark); color:#C9CEE8; padding:32px 0; font-size:13px;
+  }
+  footer.site .container{
+    display:flex; flex-wrap:wrap; justify-content:space-between; gap:20px;
+  }
+  footer.site .bio h4{ color:#fff; margin:0 0 6px 0; }
+  footer.site .meta{ text-align:right; line-height:1.9; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site">
+  <div class="container">
+    <div class="brand">Vitaminas Tecnológicas · Capacitación IA</div>
+    <h1 class="title">Taller de IA Aplicada — Elite Expert Academy</h1>
+    <p class="subtitle">Sesión B1 · IA para Material Didáctico y Gestión Administrativa · Grupo B · Ref. TEM-EEA-001-2026</p>
+    <div class="tags">
+      <span class="gold-tag">1 hora 30 min</span>
+      <span>4 participantes</span>
+      <span>Virtual · Google Meet</span>
+      <span>Instructora: Liliana Bayona Castañeda</span>
+    </div>
+  </div>
+</header>
+
+<!-- AGENDA BAR -->
+<div class="agenda-bar">
+  <div class="container">
+    <div class="ag-item">
+      <span class="ag-time">00 · 10 min</span>
+      <span class="ag-label">Kahoot</span>
+    </div>
+    <div class="ag-item">
+      <span class="ag-time">01 · 8 min</span>
+      <span class="ag-label">Contexto</span>
+    </div>
+    <div class="ag-item">
+      <span class="ag-time">02 · 15 min</span>
+      <span class="ag-label">Guía de clase</span>
+    </div>
+    <div class="ag-item">
+      <span class="ag-time">03 · 12 min</span>
+      <span class="ag-label">Ejercicios y rúbrica</span>
+    </div>
+    <div class="ag-item">
+      <span class="ag-time">04 · 15 min</span>
+      <span class="ag-label">Momento impacto</span>
+    </div>
+    <div class="ag-item">
+      <span class="ag-time">05 · 10 min</span>
+      <span class="ag-label">Cierre</span>
+    </div>
+  </div>
+</div>
+
+<main class="container">
+
+  <!-- PRESENTACIÓN -->
+  <section class="block">
+    <div class="block-number">Presentación del taller</div>
+    <h2>Materiales de la Sesión B1</h2>
+    <p>Descarga la presentación y accede a los archivos de práctica para esta sesión.</p>
+    <a class="btn" href="#">[DESCARGAR PRESENTACIÓN — PDF]</a>
+    <a class="btn outline" href="#">[CSV PRÁCTICA — ALUMNAS EEA]</a>
+  </section>
+
+  <!-- BLOQUE 00: KAHOOT -->
+  <section class="block">
+    <div class="block-number">00 // 10 min</div>
+    <h2>Kahoot de entrada</h2>
+    <span class="tag shared">Todos</span>
+    <p>Arrancamos con energía. Este Kahoot repasa los fundamentos de la Sesión 0 y sirve de calentamiento para el grupo. 8 preguntas, ritmo rápido.</p>
+    <div class="highlight">
+      <strong>¿Por qué al inicio y no al final?</strong> El Kahoot de apertura baja la resistencia inicial, recuerda lo que ya saben y crea un estado mental activo antes de las prácticas. No es evaluación — es arranque.
+    </div>
+    <a class="btn gold" href="https://kahoot.it" target="_blank">Entrar al Kahoot →</a>
+  </section>
+
+  <!-- BLOQUE 01: CONTEXTO -->
+  <section class="block">
+    <div class="block-number">01 // 8 min</div>
+    <h2>¿Qué hace la IA por tu área?</h2>
+    <span class="tag shared">Todos</span>
+    <p>Antes de practicar, ubicamos el contexto. La IA no reemplaza el criterio docente ni el criterio administrativo — lo amplifica. Hoy trabajamos con los dos perfiles del grupo.</p>
+    <div class="role-split">
+      <div class="role-card academic">
+        <div class="who">Tatiana · Ingrid · Alba</div>
+        <h4>Área Académica</h4>
+        <ul>
+          <li>Generar guías de clase diferenciadas por nivel</li>
+          <li>Crear ejercicios y rúbricas de evaluación</li>
+          <li>Redactar feedback personalizado para alumnas</li>
+          <li>Usar los materiales de EEA como fuente para la IA</li>
+        </ul>
+      </div>
+      <div class="role-card admin">
+        <div class="who">Taizú</div>
+        <h4>Área Administrativa</h4>
+        <ul>
+          <li>Interpretar el estado de la base de alumnas</li>
+          <li>Redactar mensajes de cobro y recordatorio de pago</li>
+          <li>Generar resúmenes de morosidad para reportar</li>
+          <li>Responder consultas frecuentes de alumnas sobre pagos</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- BLOQUE 02: GUÍA DE CLASE -->
+  <section class="block">
+    <div class="block-number">02 // 15 min</div>
+    <h2>Guía de clase diferenciada por nivel</h2>
+    <span class="tag academic">Área Académica</span>
+    <p>La IA puede tomar un mismo tema y adaptarlo a distintos niveles en segundos. Vamos a probarlo con un tema real de EEA: <strong>Micropunción con Dermapen</strong>.</p>
+
+    <h3>Prompt base — Tatiana, Ingrid y Alba</h3>
+    <p>Copia este prompt en ChatGPT y ejecuta en vivo:</p>
+    <div class="prompt-box">
+      Eres una diseñadora instruccional especializada en formación de estética avanzada. Usando el tema "Micropunción con Dermapen: preparación, procedimiento y contraindicaciones", crea una guía de clase para una sesión de 60 minutos con dos versiones diferenciadas: una para alumnas en nivel principiante (primera vez que ven el tema) y otra para alumnas en nivel avanzado (ya han realizado procedimientos básicos). Para cada versión incluye: objetivo de la sesión, 3 actividades concretas con tiempos, y un ejemplo de caso práctico. Formato claro, lenguaje profesional, en español.
+    </div>
+
+    <h3>Qué observar en el resultado</h3>
+    <ul class="checklist">
+      <li>¿La IA adaptó realmente el lenguaje y la dificultad entre niveles?</li>
+      <li>¿Las actividades propuestas son aplicables en el contexto de EEA?</li>
+      <li>¿Qué cambiarías con tu criterio docente? Anota al menos 2 ajustes.</li>
+    </ul>
+
+    <div class="highlight">
+      <strong>Tarea de criterio:</strong> La IA da una primera versión — tú la ajustas. El valor no está en aceptar todo lo que genera, sino en usarla como borrador rápido que tú perfeccionas con lo que sabes de tus alumnas.
+    </div>
+  </section>
+
+  <!-- BLOQUE 03: EJERCICIOS Y RÚBRICA -->
+  <section class="block">
+    <div class="block-number">03 // 12 min</div>
+    <h2>Ejercicios y rúbrica desde un material real</h2>
+    <span class="tag academic">Área Académica</span>
+    <p>Ahora subimos el nivel: vamos a usar el quiz de evaluación de Micropunción que Tatiana ya tiene —  20 preguntas de opción múltiple — como insumo para que la IA genere nuevos recursos.</p>
+
+    <h3>Prompt A — Generar ejercicios adicionales</h3>
+    <div class="prompt-box green">
+      Tengo un quiz de evaluación sobre Micropunción con Dermapen con 20 preguntas de opción múltiple. A partir de ese material, genera 5 ejercicios prácticos adicionales para que las alumnas apliquen los conceptos (no preguntas de memorización, sino situaciones reales que deban resolver). Cada ejercicio debe indicar: situación clínica, qué debe decidir la alumna y por qué es importante. Nivel: alumnas de estética avanzada con conocimiento básico del procedimiento.
+    </div>
+
+    <h3>Prompt B — Crear rúbrica de evaluación</h3>
+    <div class="prompt-box green">
+      Basándote en los criterios clave de la técnica de micropunción con Dermapen (preparación del usuario, configuración del equipo, mapeo facial, precauciones y cuidados post-procedimiento), crea una rúbrica de evaluación para valorar el desempeño práctico de una alumna durante una sesión supervisada. La rúbrica debe tener 5 criterios, con 3 niveles de desempeño (logrado / en proceso / no logrado) y descriptores concretos para cada nivel.
+    </div>
+
+    <ul class="checklist">
+      <li>¿La rúbrica generada es aplicable tal como está o necesita ajustes?</li>
+      <li>¿Los ejercicios propuestos reflejan situaciones que tus alumnas realmente enfrentan?</li>
+    </ul>
+  </section>
+
+  <!-- BLOQUE 04: MOMENTO IMPACTO — SPLIT -->
+  <section class="block">
+    <div class="block-number">04 // 15 min</div>
+    <h2>Momento de impacto — Tu material real como fuente</h2>
+    <p>Aquí cada perfil trabaja con sus propios datos reales. Este es el momento donde la IA deja de ser una herramienta genérica y se convierte en algo que ya conoce tu contexto.</p>
+
+    <!-- ACADÉMICAS: NotebookLM -->
+    <h3><span class="tag academic">Tatiana · Ingrid · Alba</span> NotebookLM con documentos de EEA</h3>
+    <p>Vamos a subir el PPTX de Micropunción y el quiz de evaluación directamente a NotebookLM. La IA lo leerá todo y podrás hacerle preguntas sobre ese contenido específico — como si tuviera el material en la mano.</p>
+
+    <ul class="steps">
+      <li>
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <strong>Abrir NotebookLM</strong>
+          Ir a <a href="https://notebooklm.google.com" target="_blank">notebooklm.google.com</a> y crear un notebook nuevo llamado "EEA — Micropunción".
+        </div>
+      </li>
+      <li>
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <strong>Subir los documentos</strong>
+          Subir el PPTX de Micropunción y el DOCX del quiz de evaluación como fuentes del notebook.
+        </div>
+      </li>
+      <li>
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <strong>Hacer las preguntas de práctica</strong>
+          Ejecutar los prompts de abajo directamente en el chat del notebook.
+        </div>
+      </li>
+    </ul>
+
+    <h3>Prompts de práctica en NotebookLM</h3>
+    <div class="prompt-box teal">
+      Con base en los documentos que tienes como fuente, resume en un párrafo cuáles son las 3 contraindicaciones absolutas de la micropunción que una alumna debe memorizar antes de realizar el procedimiento.
+    </div>
+    <div class="prompt-box teal" style="margin-top:10px;">
+      A partir del quiz de evaluación que tienes como fuente, identifica cuáles son los 3 temas donde una alumna podría confundirse más fácilmente. Para cada tema, escribe una explicación breve y clara que yo pueda usar para aclarar la duda en clase.
+    </div>
+    <div class="prompt-box teal" style="margin-top:10px;">
+      Genera un resumen de una página con los puntos clave del protocolo de micropunción facial (preparación, procedimiento y cuidados post) que pueda enviarse a alumnas como material de repaso antes de su evaluación práctica.
+    </div>
+
+    <a class="btn outline" href="https://notebooklm.google.com" target="_blank" style="margin-top:8px;">Abrir NotebookLM →</a>
+
+    <hr style="border:none; border-top:1px solid #E5E5EA; margin:28px 0;">
+
+    <!-- TAIZÚ: CSV -->
+    <h3><span class="tag admin">Taizú</span> ChatGPT con la base de alumnas (CSV ficticio)</h3>
+    <p>Taizú trabaja con la base de datos maestra de EEA: pagos, accesos, matrículas. Vamos a practicar con un CSV ficticio que tiene la misma estructura que su archivo real — para que el aprendizaje sea transferible de inmediato.</p>
+
+    <h3>Base de práctica — Alumnas EEA (datos ficticios)</h3>
+    <div style="overflow-x:auto;">
+      <table class="csv-table">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Curso</th>
+            <th>Fecha pago</th>
+            <th>Monto (USD)</th>
+            <th>Estado</th>
+            <th>Notas</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Valentina Ríos</td>
+            <td>Dermapen Avanzado</td>
+            <td>05/06/2026</td>
+            <td>180</td>
+            <td><span class="badge ok">Al día</span></td>
+            <td>Pago completo</td>
+          </tr>
+          <tr>
+            <td>Camila Torres</td>
+            <td>Micropunción Básico</td>
+            <td>10/05/2026</td>
+            <td>90</td>
+            <td><span class="badge mora">Mora</span></td>
+            <td>2 cuotas pendientes</td>
+          </tr>
+          <tr>
+            <td>Sofía Mendez</td>
+            <td>Lifting Facial</td>
+            <td>01/06/2026</td>
+            <td>150</td>
+            <td><span class="badge pendiente">Cambio solicitado</span></td>
+            <td>Quiere cambiar a tarjeta</td>
+          </tr>
+          <tr>
+            <td>Daniela Vargas</td>
+            <td>Dermapen Avanzado</td>
+            <td>15/05/2026</td>
+            <td>180</td>
+            <td><span class="badge mora">Mora</span></td>
+            <td>No responde mensajes</td>
+          </tr>
+          <tr>
+            <td>Andrea Salcedo</td>
+            <td>Micropunción Básico</td>
+            <td>20/06/2026</td>
+            <td>90</td>
+            <td><span class="badge ok">Al día</span></td>
+            <td>Pago reciente</td>
+          </tr>
+          <tr>
+            <td>Mariana Fuentes</td>
+            <td>Lifting Facial</td>
+            <td>28/05/2026</td>
+            <td>150</td>
+            <td><span class="badge pendiente">Cambio solicitado</span></td>
+            <td>Solicita pago en cuotas</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 style="margin-top:20px;">Prompts de práctica — Taizú</h3>
+    <p>Sube el CSV a ChatGPT y ejecuta estos prompts:</p>
+
+    <div class="prompt-box">
+      Analiza este archivo de alumnas de Elite Expert Academy. Dime cuántas están en mora, cuántas al día y cuántas tienen cambio de método de pago solicitado. Muestra el resumen en una tabla y agrega el monto total pendiente de cobro.
+    </div>
+    <div class="prompt-box" style="margin-top:10px;">
+      Para cada alumna que aparece en mora en este archivo, redacta un mensaje de WhatsApp cordial y profesional recordándole su cuota pendiente. El tono debe ser amable, no amenazante. Máximo 60 palabras por mensaje. Incluye el nombre de la alumna y el curso.
+    </div>
+    <div class="prompt-box" style="margin-top:10px;">
+      Una alumna llamada Sofía Mendez escribió para preguntar si puede cambiar su método de pago de transferencia a tarjeta. Redacta una respuesta estándar que confirme que se tomará nota de su solicitud y se le informará en 24 horas. Tono cálido y profesional.
+    </div>
+
+    <div class="highlight" style="margin-top:16px;">
+      <strong>Lo que cambia con la IA:</strong> Taizú dedica tiempo a revisar, clasificar y escribir mensajes uno por uno. Con IA, sube el Excel, pide el resumen y tiene los mensajes listos para revisar y enviar — el criterio sigue siendo suyo, el tiempo manual se reduce.
+    </div>
+  </section>
+
+  <!-- BLOQUE 05: CIERRE -->
+  <section class="block">
+    <div class="block-number">05 // 10 min</div>
+    <h2>Cierre y compromiso</h2>
+    <span class="tag shared">Todos</span>
+    <p>Antes de salir, cada participante declara en voz alta. Anota las respuestas para el seguimiento en la Sesión B2.</p>
+
+    <table class="cierre-table">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>¿Qué probarás esta semana con IA?</th>
+          <th>¿Qué archivo o documento usarás?</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Tatiana Grageda</td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Ingrid de la Cruz</td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Alba Punte</td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Taizú Tapia</td>
+          <td></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="highlight" style="margin-top:20px;">
+      <strong>En la Sesión B2</strong> revisamos resultados reales: qué funcionó, qué ajustar en los prompts. Cada participante debe traer al menos un ejemplo de uso que haya hecho durante la semana.
+    </div>
+  </section>
+
+  <!-- HERRAMIENTAS -->
+  <section class="block">
+    <div class="block-number">Herramientas de esta sesión</div>
+    <h2>Accesos rápidos</h2>
+    <div class="cards">
+      <div class="card">
+        <div class="icon">G</div>
+        <h4>ChatGPT</h4>
+        <div class="org">OpenAI</div>
+        <p>Guías de clase, ejercicios, rúbricas y análisis de CSV.</p>
+        <a class="btn" href="https://chatgpt.com" target="_blank">Abrir →</a>
+      </div>
+      <div class="card">
+        <div class="icon">N</div>
+        <h4>NotebookLM</h4>
+        <div class="org">Google</div>
+        <p>Sube tus documentos reales y consúltalos con IA.</p>
+        <a class="btn" href="https://notebooklm.google.com" target="_blank">Abrir →</a>
+      </div>
+      <div class="card">
+        <div class="icon">C</div>
+        <h4>Claude</h4>
+        <div class="org">Anthropic</div>
+        <p>Redacción formal, documentos largos y análisis de texto.</p>
+        <a class="btn" href="https://claude.ai" target="_blank">Abrir →</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site">
+  <div class="container">
+    <div class="bio">
+      <h4>Liliana Bayona Castañeda</h4>
+      <p style="max-width:480px; margin:0; line-height:1.7;">Ingeniera de Sistemas · Magíster en Gestión de la Información (UPV España, becaria PRONABEC) · Docente universitaria UCV · Especialista en Calidad e Información (ISO 9001, Power BI, SharePoint).</p>
+    </div>
+    <div class="meta">
+      Vitaminas Tecnológicas<br>
+      @vitaminas_tecnologicas<br>
+      administracion@vitaminas-tecnologicas.com<br>
+      TEM-EEA-001-2026 · Sesión B1
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
